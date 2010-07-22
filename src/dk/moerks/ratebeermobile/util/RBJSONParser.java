@@ -165,7 +165,11 @@ public class RBJSONParser {
 			info.setBeerName(json.getString("BeerName"));
 			info.setBrewerId(json.getString("BrewerID"));
 			info.setBrewerName(json.getString("BrewerName"));
-			info.setOverallPctl(json.getLong("OverallPctl"));
+			if(!json.getString("OverallPctl").equals("null")){
+				info.setOverallPctl(json.getLong("OverallPctl"));
+			} else {
+				info.setOverallPctl(0);
+			}
 			info.setBeerStyleName(json.getString("BeerStyleName"));
 			info.setDescription(json.getString("Description"));
 			info.setAbv(json.getString("Alcohol"));

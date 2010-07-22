@@ -76,6 +76,7 @@ public class NetBroker {
 		} catch (ClientProtocolException e) {
 		} catch (IOException e) {
 		} catch (Exception e){
+			e.printStackTrace();
 			throw new NetworkException(context, LOGTAG, "Network Error - Do you have a network connection?", e);
 		}
 		
@@ -244,10 +245,9 @@ public class NetBroker {
 	private static Drawable responseDrawable(HttpResponse response){
 		try {
 			Drawable result = Drawable.createFromStream(response.getEntity().getContent(), "tmp.jpg");
-			Log.d(LOGTAG, "HEIGHT: " + result.getMinimumHeight());
 			return result;
 		} catch(IOException e){
-			e.printStackTrace();
+			Log.e(LOGTAG, "Not able to create Drawable as stream was null");
 		}
 		return null;
 	}
