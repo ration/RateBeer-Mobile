@@ -44,6 +44,7 @@ import android.widget.Toast;
 import dk.moerks.ratebeermobile.activity.BetterRBListActivity;
 import dk.moerks.ratebeermobile.adapters.FeedAdapter;
 import dk.moerks.ratebeermobile.task.BarcodeLookupTask;
+import dk.moerks.ratebeermobile.task.BetterRBTask;
 import dk.moerks.ratebeermobile.task.PostTwitterStatusTask;
 import dk.moerks.ratebeermobile.task.RefreshFriendFeedTask;
 import dk.moerks.ratebeermobile.task.RetrieveUserIdTask;
@@ -54,36 +55,32 @@ import dk.moerks.ratebeermobile.util.StringUtils;
 public class Home extends BetterRBListActivity {
 	private static final String LOGTAG = "Home";
 	private static final int BARCODE_ACTIVITY = 101;
+	private static final int SETTINGS_ACTIVITY = 102;
 	private static final int INSTALL_BARCODE_SCANNER = 1;
 	
-	private boolean firstRun;
 	private boolean hasNewDrinkText;
+
+	private EditText updateTextGen;
+	private TextView updateStatusGen;
+	private Button updateButton;
+	private Button searchButton;
+	private Button barcodeMenuButton;
+	private Button beermailButton;
+	private Button placesButton;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Verify if this might be the first run of the application
-		SharedPreferences settings = getApplicationContext().getSharedPreferences(Settings.PREFERENCETAG, 0);
-		String username = settings.getString("rb_username", "");
-		String password = settings.getString("rb_password", "");
+		updateTextGen = (EditText) findViewById(R.id.drinkingText);
+		updateStatusGen = (TextView) findViewById(R.id.drinkingStatus);
+		updateButton = (Button) findViewById(R.id.drinkingUpdateButton);
+		searchButton = (Button) findViewById(R.id.searchMenuButton);
+		barcodeMenuButton = (Button) findViewById(R.id.barcodeMenuButton);
+		beermailButton = (Button) findViewById(R.id.beermailMenuButton);
+		placesButton = (Button) findViewById(R.id.placesMenuButton);
 		
-		if(username != null && password != null && username.length()>0 && password.length() > 0){
-			firstRun = false;
-		} else {
-			firstRun = true;
-		}
-                
-        final Button updateButton = (Button) findViewById(R.id.drinkingUpdateButton);
-        Button searchButton = (Button) findViewById(R.id.searchMenuButton);
-        Button barcodeMenuButton = (Button) findViewById(R.id.barcodeMenuButton);
-        Button beermailButton = (Button) findViewById(R.id.beermailMenuButton);
-        Button placesButton = (Button) findViewById(R.id.placesMenuButton);
-        
-        final EditText updateTextGen = (EditText) findViewById(R.id.drinkingText);
-        updateTextGen.setHint(getText(R.string.drinking));
-                
         searchButton.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View v) {
         		onSearchRequested();
@@ -148,24 +145,33 @@ public class Home extends BetterRBListActivity {
 			}
 		});
         
-        // Force an update of the friend feed on startup and retrieve userids
-        if (!firstRun) {
+        // Force an update of the friend feed on startup and retrieve user id
+        if (!isFirstRun()) {
+        	new RetrieveUserIdTask(this).execute();
         	new RefreshFriendFeedTask(this).execute();
-        	
-        	//if(getUserId() == null || getUserId().length() <= 0){
-        		new RetrieveUserIdTask(this).execute();
-        	//}
         }
+        
     }
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-		if(firstRun){
+		if(isFirstRun()){
         	Intent settingsIntent = new Intent(Home.this, Settings.class);  
-        	startActivity(settingsIntent);
+        	startActivityForResult(settingsIntent, SETTINGS_ACTIVITY);
 		}
+	}
+	
+	private boolean isFirstRun() {
+
+        // Verify if this might be the first run of the application
+		SharedPreferences settings = getApplicationContext().getSharedPreferences(Settings.PREFERENCETAG, 0);
+		String username = settings.getString("rb_username", "");
+		String password = settings.getString("rb_password", "");
+		
+		return !(username.length() > 0 && password.length() > 0);
+
 	}
 	
 	@Override
@@ -189,7 +195,7 @@ public class Home extends BetterRBListActivity {
 		switch(item.getItemId()){
 		case 0:
 			Intent settingsIntent = new Intent(this, Settings.class);
-			startActivity(settingsIntent);
+			startActivityForResult(settingsIntent, SETTINGS_ACTIVITY);
 			return true;
 		}
 		
@@ -264,6 +270,12 @@ public class Home extends BetterRBListActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 Log.d(LOGTAG, "ACTIVTIY RESULT WAS CANCELLED");
             }
+        } else if (requestCode == SETTINGS_ACTIVITY) {
+        	
+        	// Retrieve user id again (since this might have changed now)
+        	new RetrieveUserIdTask(this).execute();
+        	new RefreshFriendFeedTask(this).execute();
+        	
         }
     }
     
@@ -287,12 +299,10 @@ public class Home extends BetterRBListActivity {
 	public void onDrinkingStatusUpdated(String result) {
 
 		// Update Drinking Status
-		TextView updateStatusGen = (TextView) findViewById(R.id.drinkingStatus);
 		updateStatusGen.setText("You are currently drinking " + StringUtils.cleanHtml(result));
-
 		// Updated, so clear the text box
-        EditText updateTextGen = (EditText) findViewById(R.id.drinkingText);
         updateTextGen.setText("");
+        
 	}
 
 	public void onBarcodeProductRetrieved(String result) {
@@ -314,6 +324,8 @@ public class Home extends BetterRBListActivity {
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putString("rb_userid", result);
     	editor.commit();
+		// Login success; enable the appropriate buttons
+		updateButtonAvailability(true);
 	}
 
 	private void startUpdateNowDrinkingTask(String updateTextString) {
@@ -327,6 +339,19 @@ public class Home extends BetterRBListActivity {
     		new PostTwitterStatusTask(Home.this).execute("Now drinking " + updateTextString);
     	}
     	
+	}
+
+	public void onFailedUserIdRetrieval(BetterRBTask<?, ?> failingTask, Exception error) {
+		// Login failed; disable the appropriate buttons
+		if (failingTask instanceof RetrieveUserIdTask) { // Prevent reporting this more than once
+			updateButtonAvailability(false);
+		}
+	}
+
+	private void updateButtonAvailability(boolean success) {
+		updateTextGen.setEnabled(success);
+		updateButton.setEnabled(success);
+		beermailButton.setEnabled(success);
 	}
 	
 }
