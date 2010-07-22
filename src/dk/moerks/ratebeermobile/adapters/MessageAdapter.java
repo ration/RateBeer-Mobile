@@ -54,7 +54,11 @@ public class MessageAdapter extends ArrayAdapter<MessageHeader> {
 			subject.setText(headers.get(position).getSubject());
 			
 			TextView status = (TextView)row.findViewById(R.id.mail_row_status);
-			status.setText(headers.get(position).getStatus());
+			if(headers.get(position).getStatus().equalsIgnoreCase("true")){
+				status.setText("Read");
+			} else {
+				status.setText("Unread");
+			}
 
 			TextView date = (TextView)row.findViewById(R.id.mail_row_date);
 			date.setText(headers.get(position).getDate());

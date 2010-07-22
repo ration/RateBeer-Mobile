@@ -20,11 +20,11 @@ package dk.moerks.ratebeermobile.task;
 
 import android.content.Context;
 import android.util.Log;
-import dk.moerks.ratebeermobile.R;
 import dk.moerks.ratebeermobile.MailView;
+import dk.moerks.ratebeermobile.R;
 import dk.moerks.ratebeermobile.activity.BetterRBActivity;
 import dk.moerks.ratebeermobile.io.NetBroker;
-import dk.moerks.ratebeermobile.util.RBParser;
+import dk.moerks.ratebeermobile.util.RBJSONParser;
 import dk.moerks.ratebeermobile.vo.Message;
 
 public class RetrieveBeermailTask extends BetterRBTask<String, Message> {
@@ -38,8 +38,8 @@ public class RetrieveBeermailTask extends BetterRBTask<String, Message> {
 
 		// Get a specific beermail message
 		Log.d("RetrieveBeermailTask", "Retrieving beermail with ID " + params[0]);
-		String responseString = NetBroker.doRBGet(context, "http://ratebeer.com/showmessage/"+params[0]+"/");
-		return RBParser.parseMessage(responseString);
+		String responseString = NetBroker.doRBGet(context, "http://www.ratebeer.com/json/msg.asp?u="+params[0]+"&mid="+params[1]);
+		return RBJSONParser.parseMessage(responseString);
 		
 	}
 	

@@ -60,7 +60,7 @@ public class MailView extends BetterRBDefaultActivity {
 
         if(messageId != null){
         	// Retrieve the beermail message text
-        	new RetrieveBeermailTask(MailView.this).execute(messageId);
+        	new RetrieveBeermailTask(MailView.this).execute(getUserId(), messageId);
         }
 
         replyMailButton = (Button) findViewById(R.id.replyMailButton);

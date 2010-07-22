@@ -28,6 +28,8 @@ import org.json.JSONObject;
 import android.util.Log;
 import dk.moerks.ratebeermobile.exceptions.RBParserException;
 import dk.moerks.ratebeermobile.vo.BeerInfo;
+import dk.moerks.ratebeermobile.vo.Message;
+import dk.moerks.ratebeermobile.vo.MessageHeader;
 import dk.moerks.ratebeermobile.vo.PlacesInfo;
 import dk.moerks.ratebeermobile.vo.Review;
 import dk.moerks.ratebeermobile.vo.SearchResult;
@@ -195,5 +197,55 @@ public class RBJSONParser {
 		}
 		
 		return new Integer(count);
+	}
+	
+	public static List<MessageHeader> parseMessageHeaders(String responseString) throws RBParserException {
+		List<MessageHeader> results = new ArrayList<MessageHeader>();
+
+		try {
+			Log.d(LOGTAG, "Creating JSON Object");
+			JSONArray jsonObjects = new JSONArray(responseString);
+			
+			Log.d(LOGTAG, "ARRAY LENGTH: " + jsonObjects.length());
+			for (int i = 0; i < jsonObjects.length(); i++) {
+				MessageHeader header = new MessageHeader();
+				
+				Log.d(LOGTAG, "JSONObject("+i+"): " + jsonObjects.get(i));
+				JSONObject json = new JSONObject(jsonObjects.getString(i));
+				
+				header.setMessageId(json.getString("MessageID"));
+				header.setSender(json.getString("UserName"));
+				header.setSenderId(json.getString("Source"));
+				header.setStatus(json.getString("MessageRead"));
+				header.setSubject(json.getString("Subject"));
+				header.setDate(json.getString("Sent"));
+
+				results.add(header);
+			}		
+		} catch(JSONException e){
+			throw new RBParserException(LOGTAG, "Unable to parse beermail message headers", e);
+		}
+		
+		return results;
+		
+	}
+
+	public static Message parseMessage(String responseString) throws RBParserException {
+		Message message = new Message();
+		
+		try {
+			Log.d(LOGTAG, "Creating JSON Object");
+			JSONArray jsonObjects = new JSONArray(responseString);
+
+			Log.d(LOGTAG, "JSONObject(0): " + jsonObjects.get(0));
+			JSONObject json = jsonObjects.getJSONObject(0);
+			
+			message.setMessage(json.getString("Body"));
+			message.setTime(json.getString("Received"));
+		} catch(JSONException e){
+			throw new RBParserException(LOGTAG, "Unable to parse beermail message", e);
+		}
+		
+		return message;
 	}
 }
