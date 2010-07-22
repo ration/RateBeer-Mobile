@@ -26,7 +26,7 @@ import dk.moerks.ratebeermobile.BeerMail;
 import dk.moerks.ratebeermobile.R;
 import dk.moerks.ratebeermobile.activity.BetterRBActivity;
 import dk.moerks.ratebeermobile.io.NetBroker;
-import dk.moerks.ratebeermobile.util.RBParser;
+import dk.moerks.ratebeermobile.util.RBJSONParser;
 import dk.moerks.ratebeermobile.vo.MessageHeader;
 
 public class RetrieveBeermailsTask extends BetterRBTask<String, List<MessageHeader>> {
@@ -40,8 +40,8 @@ public class RetrieveBeermailsTask extends BetterRBTask<String, List<MessageHead
 
 		// Get a list of mails
 		Log.d("RetrieveBeermailsTask", "Retrieving all beermails.");
-		String responseString = NetBroker.doRBGet(context, "http://ratebeer.com/user/messages/");
-		return RBParser.parseBeermail(responseString);
+		String responseString = NetBroker.doRBGet(context, "http://www.ratebeer.com/json/msg.asp?u="+params[0]+"&max=100");
+		return RBJSONParser.parseMessageHeaders(responseString);
 		
 	}
 	

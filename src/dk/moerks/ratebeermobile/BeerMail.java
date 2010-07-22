@@ -52,7 +52,7 @@ public class BeerMail extends BetterRBListActivity {
         });
 
         // Retrieve BeerMails
-        new RetrieveBeermailsTask(this).execute();
+        new RetrieveBeermailsTask(this).execute(getUserId());
 	}
 	
     @Override
@@ -73,7 +73,7 @@ public class BeerMail extends BetterRBListActivity {
     	super.onActivityResult(requestCode, resultCode, data);
     	
     	if(resultCode == RESULT_OK){
-    		new RetrieveBeermailsTask(this).execute();
+    		new RetrieveBeermailsTask(this).execute(getUserId());
     	}
     }
     
