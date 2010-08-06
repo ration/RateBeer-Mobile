@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:background="@color/actionbar_background"
+  >
+  <TextView
+  	android:layout_width="0dip"
+  	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:textSize="20dip"
+	android:textColor="@color/actionbar_text"
+  	android:text="RateBeer Mobile"
+  	/>
+  <ImageButton
+  	android:id="@+id/actionbar_barcode_button"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:background="@color/transparent"
+  	android:paddingLeft="5dip"
+	android:src="@drawable/actionbar_barcode"
+	/>
+  <ImageButton
+  	android:id="@+id/actionbar_search_button"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:background="@color/transparent"
+  	android:paddingLeft="5dip"
+	android:src="@drawable/actionbar_search"
+	/>
+</LinearLayout>
