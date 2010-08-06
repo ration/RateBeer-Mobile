@@ -18,15 +18,10 @@
  */
 package dk.moerks.ratebeermobile;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,9 +42,9 @@ import dk.moerks.ratebeermobile.task.BarcodeLookupTask;
 import dk.moerks.ratebeermobile.task.BetterRBTask;
 import dk.moerks.ratebeermobile.task.PostTwitterStatusTask;
 import dk.moerks.ratebeermobile.task.RefreshFriendFeedTask;
+import dk.moerks.ratebeermobile.task.RefreshFriendFeedTask.FriendFeedTaskResult;
 import dk.moerks.ratebeermobile.task.RetrieveUserIdTask;
 import dk.moerks.ratebeermobile.task.SetDrinkingStatusTask;
-import dk.moerks.ratebeermobile.task.RefreshFriendFeedTask.FriendFeedTaskResult;
 import dk.moerks.ratebeermobile.util.StringUtils;
 
 public class Home extends BetterRBListActivity {
@@ -218,40 +213,7 @@ public class Home extends BetterRBListActivity {
         }
 	}
 	
-    @Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case INSTALL_BARCODE_SCANNER:
-			return buildInstallDialog(R.string.scan_scanner_not_found, Uri.parse("market://search?q=pname:com.google.zxing.client.android"));			
-		}
-		return null;
-	}
 
-	private Dialog buildInstallDialog(int messageResourceID, final Uri marketUri) {
-		AlertDialog.Builder fbuilder = new AlertDialog.Builder(this);
-		fbuilder.setMessage(messageResourceID);
-		fbuilder.setCancelable(true);
-		fbuilder.setPositiveButton(R.string.scan_install, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-
-	        	try {
-					getPackageManager().getPackageInfo("com.google.zxing.client.android", PackageManager.GET_ACTIVITIES);
-					
-					Intent install = new Intent(Intent.ACTION_VIEW, marketUri);
-					startActivity(install);
-				} catch (NameNotFoundException e) {
-					Toast.makeText(getApplicationContext(), R.string.scan_nomarket, Toast.LENGTH_LONG).show();
-				}				
-				dialog.dismiss();
-			}
-		});
-		fbuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
-		return fbuilder.create();
-	}
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
