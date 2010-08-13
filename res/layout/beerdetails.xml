@@ -136,7 +136,8 @@
 		android:id="@+id/beerview_value_description"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textColor="#ddd"
+		android:textColor="#ff000000"
+		android:background="#ffdddddd"
 		android:paddingTop="3dip"
 		android:paddingBottom="3dip"
 		/>
