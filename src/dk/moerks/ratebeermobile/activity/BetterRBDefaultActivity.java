@@ -18,18 +18,31 @@
  */
 package dk.moerks.ratebeermobile.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.github.droidfu.activities.BetterDefaultActivity;
 
+import dk.moerks.ratebeermobile.R;
 import dk.moerks.ratebeermobile.Settings;
 import dk.moerks.ratebeermobile.exceptions.RBException;
 
 public abstract class BetterRBDefaultActivity extends BetterDefaultActivity implements BetterRBActivity {
-
+	private static final String LOGTAG = "BetterRBDefaultActivity";
+	private static final int BARCODE_ACTIVITY = 101;
+	private static final int INSTALL_BARCODE_SCANNER = 1;
 	private static final String EXTRA_HAS_TASK = "has_running_task";
 	private boolean hasTask;
 	
@@ -39,6 +52,7 @@ public abstract class BetterRBDefaultActivity extends BetterDefaultActivity impl
         
 		// Request progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);        
 	}
 
     @Override
@@ -80,5 +94,72 @@ public abstract class BetterRBDefaultActivity extends BetterDefaultActivity impl
 	public boolean hasRunningTask() {
 		return this.hasTask;
 	}
+
+	public void initializeActionBar(){
+        ImageButton barcodeButton = (ImageButton) findViewById(R.id.actionbar_barcode_button);
+        barcodeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	tryStartBarcodeScanner();
+            }
+        });
+
+        ImageButton searchButton = (ImageButton) findViewById(R.id.actionbar_search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+        		onSearchRequested();
+            }
+        });
+	}
 	
+	private void tryStartBarcodeScanner() {
+    	// If barcode scanner is available, allow the scanner to be started
+        try {
+        	getPackageManager().getPackageInfo("com.google.zxing.client.android", PackageManager.GET_ACTIVITIES);
+
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            startActivityForResult(intent, BARCODE_ACTIVITY);
+            
+        } catch(PackageManager.NameNotFoundException e){
+        	
+        	Log.d(LOGTAG, "BarcodeScanner is not installed");
+        	// Ask if we should install the barcode scanner instead
+        	showDialog(INSTALL_BARCODE_SCANNER);
+        }
+	}
+
+    @Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case INSTALL_BARCODE_SCANNER:
+			return buildInstallDialog(R.string.scan_scanner_not_found, Uri.parse("market://search?q=pname:com.google.zxing.client.android"));			
+		}
+		return null;
+	}
+
+	private Dialog buildInstallDialog(int messageResourceID, final Uri marketUri) {
+		AlertDialog.Builder fbuilder = new AlertDialog.Builder(this);
+		fbuilder.setMessage(messageResourceID);
+		fbuilder.setCancelable(true);
+		fbuilder.setPositiveButton(R.string.scan_install, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+
+	        	try {
+					getPackageManager().getPackageInfo("com.google.zxing.client.android", PackageManager.GET_ACTIVITIES);
+					
+					Intent install = new Intent(Intent.ACTION_VIEW, marketUri);
+					startActivity(install);
+				} catch (NameNotFoundException e) {
+					Toast.makeText(getApplicationContext(), R.string.scan_nomarket, Toast.LENGTH_LONG).show();
+				}				
+				dialog.dismiss();
+			}
+		});
+		fbuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		return fbuilder.create();
+	}
+
 }

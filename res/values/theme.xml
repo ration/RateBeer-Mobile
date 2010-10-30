@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="transparent">#00000000</color>
+	
+	<color name="application_background">#ffffffff</color>
+	<color name="application_text">#ff000000</color>
+	<color name="application_selector_color">#ff003366</color>
+	
+	<color name="search_row_percentile_background">#ff66a212</color>
+	<color name="search_row_ratings_background">#ffff9f00</color>
+	<color name="search_row_additional_background">#ff666666</color>
+	<color name="search_row_additional_text">#ffdddddd</color>
+	
+	<color name="actionbar_background">#ff003366</color>
+	<color name="actionbar_text">#ffffffff</color>
+	<color name="raves_background">#003366</color>
+	<color name="raves_text">#ffffff</color>
+</resources>
