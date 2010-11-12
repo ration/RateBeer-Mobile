@@ -72,6 +72,7 @@ public abstract class BetterAsyncTask<ParameterT, ProgressT, ReturnT> extends
             return caller;
         } catch (Exception e) {
             e.printStackTrace();
+            this.error = e;
             return null;
         }
     }

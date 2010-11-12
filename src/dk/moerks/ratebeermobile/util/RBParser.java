@@ -183,7 +183,11 @@ public class RBParser {
 	}
 
 	public static boolean parseNewMail(String responseString) {
-		return responseString.contains("You have unread messages");
+		if(responseString != null){
+			return responseString.contains("You have unread messages");
+		} else {
+			return false;
+		}
 	}
 
 	public static List<Feed> parseFeed(String responseString) throws RBParserException {
