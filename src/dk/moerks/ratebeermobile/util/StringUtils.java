@@ -39,7 +39,6 @@ public class StringUtils {
 		String result = value.replaceAll("&nbsp;", " ");
 		result = result.replaceAll("\n", "");
 		result = result.replaceAll("<br>", "\n");
-		result = result.replaceAll("<br />", "\n");
 		result = result.replaceAll("<BR>", "\n");
 		result = result.replaceAll("&#40;", "(");
 		result = result.replaceAll("&#41;", ")");

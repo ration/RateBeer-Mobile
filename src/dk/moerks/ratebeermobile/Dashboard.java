@@ -1,6 +1,7 @@
 package dk.moerks.ratebeermobile;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 import dk.moerks.ratebeermobile.activity.BetterRBDefaultActivity;
 
 public class Dashboard extends BetterRBDefaultActivity {
@@ -10,5 +11,8 @@ public class Dashboard extends BetterRBDefaultActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
         initializeActionBar();
+        
+        ImageButton profileButton = (ImageButton)findViewById(R.id.dashboard_profile_button);
+        
     }
 }

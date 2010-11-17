@@ -18,9 +18,9 @@
   along with Ratebeer Mobile.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="dk.moerks.ratebeermobile" android:versionCode="16" android:versionName="1.6.0">
+      package="dk.moerks.ratebeermobile" android:versionName="2.0.0" android:versionCode="17">
     
-<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="4" />
+<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="3" />
 <supports-screens android:smallScreens="true" android:anyDensity="true" />
 
 <uses-permission android:name="android.permission.INTERNET" />

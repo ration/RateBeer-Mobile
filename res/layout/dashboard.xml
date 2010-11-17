@@ -18,6 +18,7 @@
 		>
 		<TableRow>
 			<ImageButton
+				android:id="@+id/dashboard_profile_button"
 			  	android:layout_width="fill_parent"
   				android:layout_height="wrap_content"
   				android:background="@color/transparent"
@@ -26,12 +27,13 @@
 				android:src="@drawable/dashboard_profile"
 				/>
 			<ImageButton
+				android:id="@+id/dashboard_places_button"
 			  	android:layout_width="fill_parent"
   				android:layout_height="wrap_content"
   				android:background="@color/transparent"
   				android:padding="10px"
   				android:gravity="center"
-				android:src="@drawable/dashboard_beermail"
+				android:src="@drawable/dashboard_places"
 				/>
 		</TableRow>
 	</TableLayout>		

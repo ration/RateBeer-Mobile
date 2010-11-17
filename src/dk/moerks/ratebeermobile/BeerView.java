@@ -127,7 +127,7 @@ public class BeerView extends BetterRBListActivity {
 		TextView styleView = (TextView)getListView().findViewById(R.id.beerview_value_style);
 		styleView.setText(getText(R.string.view_style) + " " + StringUtils.cleanHtml(result.getBeerStyleName()));
 		TextView descView = (TextView)getListView().findViewById(R.id.beerview_value_description);
-		descView.setText(StringUtils.cleanHtml(result.getDescription()));
+		descView.setText(StringUtils.cleanHtml(result.getBeerStyleName()));
 
 		TextView pctlView = (TextView)getListView().findViewById(R.id.beerview_value_overallpctl);
 		pctlView.setText(""+ (int)result.getOverallPctl());

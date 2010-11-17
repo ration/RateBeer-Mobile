@@ -6,13 +6,12 @@
   android:orientation="horizontal"
   android:background="@color/actionbar_background"
   >
-  <TextView
+  <ImageView
   	android:layout_width="0dip"
   	android:layout_height="wrap_content"
 	android:layout_weight="1"
-	android:textSize="20dip"
-	android:textColor="@color/actionbar_text"
-  	android:text="RateBeer Mobile"
+  	android:background="@color/transparent"
+	android:src="@drawable/ic_actionbar_ratebeer"
   	/>
   <ImageButton
   	android:id="@+id/actionbar_barcode_button"

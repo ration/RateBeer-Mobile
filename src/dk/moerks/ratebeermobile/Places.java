@@ -55,12 +55,8 @@ public class Places extends BetterRBListActivity implements LocationListener {
 			criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 			provider = locationManager.getBestProvider(criteria, true);
 			
-			if(provider != null){
-				Log.d(LOGTAG, "Using "+ provider +" Provider...");
-				locationManager.requestLocationUpdates(provider, 0, 500.0f, this);
-			} else {
-				Log.e(LOGTAG, "Could not instantiate a proper provider");
-			}
+			Log.d(LOGTAG, "Using "+ provider +" Provider...");
+			locationManager.requestLocationUpdates(provider, 0, 500.0f, this);
 		} else {
 			Log.e(LOGTAG, "LocationManager is null");
 		}
