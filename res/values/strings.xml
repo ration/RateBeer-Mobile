@@ -51,7 +51,7 @@
 <string name="places_retrieving">Getting Nearby Places</string>
 <string name="place_avgrating">Average Rating: </string>
 <string name="place_noplaces">No nearby places found</string>
-<string name="twitter_rating_message">Just rated %s with a %s http://www.ratebeer.com/user/%s/</string>
+<string name="twitter_rating_message" formatted="false">Just rated %s with a %s http://www.ratebeer.com/user/%s/</string>
 
 <string name="task_barcodelookup">Identifying barcode...</string>
 <string name="task_deletebeermail">Deleting beermail...</string>

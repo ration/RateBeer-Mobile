@@ -29,16 +29,19 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 import dk.moerks.ratebeermobile.activity.BetterRBDefaultActivity;
 import dk.moerks.ratebeermobile.task.PostTwitterStatusTask;
 import dk.moerks.ratebeermobile.task.SaveRatingTask;
 
 public class Rate extends BetterRBDefaultActivity {
+	private static final int MIN_COMMENT_LEN = 75;
 	@SuppressWarnings("unused")
 	private static final String LOGTAG = "Rate";
     String beername =  null;
@@ -46,10 +49,37 @@ public class Rate extends BetterRBDefaultActivity {
 	
     private TextView rateCharleftText = null;
     
+    private class RatingListener implements OnItemSelectedListener {
+
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			updateTotalText();
+			
+		}
+
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
+    	
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rate);
+        
+        OnItemSelectedListener l = new RatingListener();
+        
+    	Spinner aromaText = (Spinner) findViewById(R.id.rate_value_aroma);
+    	aromaText.setOnItemSelectedListener(l);
+    	Spinner appearanceText = (Spinner) findViewById(R.id.rate_value_appearance);
+    	appearanceText.setOnItemSelectedListener(l);
+    	Spinner flavorText = (Spinner) findViewById(R.id.rate_value_flavor);
+    	flavorText.setOnItemSelectedListener(l);
+    	Spinner palateText = (Spinner) findViewById(R.id.rate_value_palate);
+    	palateText.setOnItemSelectedListener(l);
+    	Spinner overallText = (Spinner) findViewById(R.id.rate_value_overall);
+    	overallText.setOnItemSelectedListener(l);
+    		
         
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
@@ -58,7 +88,7 @@ public class Rate extends BetterRBDefaultActivity {
         }
         
         rateCharleftText = (TextView) findViewById(R.id.rate_label_charleft);
-        rateCharleftText.setText(getText(R.string.rate_charleft) + " 75");
+        rateCharleftText.setText(getText(R.string.rate_charleft) + " " + String.valueOf(MIN_COMMENT_LEN));
         EditText rateComment = (EditText) findViewById(R.id.rate_value_comments);
         rateComment.addTextChangedListener(new TextWatcher(){
 			public void afterTextChanged(Editable s) {
@@ -69,7 +99,7 @@ public class Rate extends BetterRBDefaultActivity {
 
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				int charNumber = s.length();
-				int resultNumber = 75 - charNumber;
+				int resultNumber = MIN_COMMENT_LEN - charNumber;
 				if(resultNumber > 0){
 					rateCharleftText.setText(getText(R.string.rate_charleft) + " " + resultNumber);
 				} else {
@@ -88,7 +118,7 @@ public class Rate extends BetterRBDefaultActivity {
             	EditText comment = (EditText) findViewById(R.id.rate_value_comments);
             	final String commentString = comment.getText().toString();
                 
-    			if(commentString.length() > 74){
+    			if(commentString.length() >= MIN_COMMENT_LEN){
 
                 	Spinner aromaText = (Spinner) findViewById(R.id.rate_value_aroma);
                 	Spinner appearanceText = (Spinner) findViewById(R.id.rate_value_appearance);
@@ -101,7 +131,7 @@ public class Rate extends BetterRBDefaultActivity {
                 	final String flavorString = (String)flavorText.getSelectedItem();
                 	final String palateString = (String)palateText.getSelectedItem();
                 	final String overallString = (String)overallText.getSelectedItem();
-                	String totalScore = calculateTotalScore(aromaString, appearanceString, flavorString, palateString, overallString);
+                	String totalScore = calculateTotalScore();
                 	
 	    			List<NameValuePair> parameters = new ArrayList<NameValuePair>();  
 	    			parameters.add(new BasicNameValuePair("BeerID", beerid));  
@@ -131,19 +161,7 @@ public class Rate extends BetterRBDefaultActivity {
         		return getString(R.string.twitter_rating_message, beername, score, getUserId());
         	}
 
-			private String calculateTotalScore(String aromaString, String appearanceString, String flavorString, String palateString, String overallString) {
-				int aroma = Integer.parseInt(aromaString);
-				int appearance = Integer.parseInt(appearanceString);
-				int flavor = Integer.parseInt(flavorString);
-				int palate = Integer.parseInt(palateString);
-				int overall = Integer.parseInt(overallString);
-				
-				int total = (aroma + appearance + flavor + palate + overall);
-
-				float totalscore =  ((float)total) / 10;
-				String result = "" + totalscore;
-				return result;
-			}
+	
         });
     }
     
@@ -159,6 +177,44 @@ public class Rate extends BetterRBDefaultActivity {
 
 	public void onRatingSaved() {
 		Toast.makeText(getApplicationContext(), getText(R.string.toast_rate_success), Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onAromaClick(View vier) {
+		
+	}
+	
+	public void updateTotalText() {
+		CharSequence totalScore = getText(R.string.rate_totalscore);
+		TextView totalText = (TextView) findViewById(R.id.rate_total);
+		totalText.setText(totalScore + " " + calculateTotalScore());
+	}
+	
+	private String calculateTotalScore() {
+		
+		Spinner aromaText = (Spinner) findViewById(R.id.rate_value_aroma);
+    	Spinner appearanceText = (Spinner) findViewById(R.id.rate_value_appearance);
+    	Spinner flavorText = (Spinner) findViewById(R.id.rate_value_flavor);
+    	Spinner palateText = (Spinner) findViewById(R.id.rate_value_palate);
+    	Spinner overallText = (Spinner) findViewById(R.id.rate_value_overall);
+    	
+    	final String aromaString = (String)aromaText.getSelectedItem();
+    	final String appearanceString = (String)appearanceText.getSelectedItem();
+    	final String flavorString = (String)flavorText.getSelectedItem();
+    	final String palateString = (String)palateText.getSelectedItem();
+    	final String overallString = (String)overallText.getSelectedItem();
+   
+		
+		int aroma = Integer.parseInt(aromaString);
+		int appearance = Integer.parseInt(appearanceString);
+		int flavor = Integer.parseInt(flavorString);
+		int palate = Integer.parseInt(palateString);
+		int overall = Integer.parseInt(overallString);
+		
+		int total = (aroma + appearance + flavor + palate + overall);
+
+		float totalscore =  ((float)total) / 10;
+		String result = "" + totalscore;
+		return result;
 	}
 	
 }

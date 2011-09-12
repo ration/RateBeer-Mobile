@@ -88,4 +88,15 @@
 	<item>1800000</item>
 	<item>3600000</item>
 </string-array>
+<string-array name="aroma_malt">
+<item>caramel</item>
+<item>bread</item>
+<item>hay</item>
+<item>cereal</item>
+<item>chocolate</item>
+<item>coffee</item>
+<item>nuts</item>
+<item>toast</item>
+<item>roasty</item> 
+</string-array>
 </resources>
