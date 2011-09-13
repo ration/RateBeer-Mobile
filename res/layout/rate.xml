@@ -68,7 +68,7 @@
 	                android:layout_height="wrap_content"
 	                android:paddingRight="10px"
 	                android:paddingLeft="20px"
-	                />
+	                android:clickable="true" android:onClick="onAppearanceClick"/>
 		        <Spinner
 		        	android:id="@+id/rate_value_appearance"
 		        	android:entries="@array/appearance"
@@ -84,7 +84,7 @@
 	                android:layout_height="wrap_content"
 	                android:paddingRight="10px"
 	                android:paddingLeft="20px"
-	                />
+	                android:clickable="true" android:onClick="onTasteClick"/>
 		        <Spinner
 		        	android:id="@+id/rate_value_flavor"
 		        	android:entries="@array/flavor"
@@ -100,7 +100,7 @@
 	                android:layout_height="wrap_content"
 	                android:paddingRight="10px"
 	                android:paddingLeft="20px"
-	                />
+	                android:clickable="true" android:onClick="onPalateClick"/>
 		        <Spinner
 		        	android:id="@+id/rate_value_palate"
 		        	android:entries="@array/palate"

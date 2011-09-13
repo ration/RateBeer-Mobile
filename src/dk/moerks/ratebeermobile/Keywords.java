@@ -6,9 +6,6 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import dk.moerks.ratebeermobile.activity.BetterRBDefaultActivity;
@@ -37,7 +34,6 @@ public class Keywords extends BetterRBDefaultActivity {
 	public void onBackPressed() {
 		long[] ids = lView.getCheckItemIds();
 		
-		// TODO can 
 		List<String> sels = new ArrayList<String>();
 		for(long id: ids) {
 			sels.add((String)(lView.getItemAtPosition((int) id)));

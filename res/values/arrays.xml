@@ -80,7 +80,8 @@
 		<item>1800000</item>
 		<item>3600000</item>
 	</string-array>
-	<string-array name="aroma_malt">
+	<string-array name="aroma_keywords">
+		<!-- Malt -->
 		<item>caramel</item>
 		<item>bread</item>
 		<item>hay</item>
@@ -90,5 +91,96 @@
 		<item>nuts</item>
 		<item>toast</item>
 		<item>roasty</item>
+		<!-- Hops -->
+		<item>resin</item>
+		<item>floral</item>
+		<item>grass</item>
+		<item>spruce</item>
+		<item>citrus</item>
+		<item>herbs</item>
+		<!-- Yeast -->
+		<item>dough</item>
+		<item>barnyard</item>
+		<item>cheese</item>
+		<item>basement</item>
+		<item>aromas</item>
+		<item>earthy</item>
+		<item>leather</item>
+		<item>leaves</item>
+		<!-- Other -->
+		<item>alcohol</item>
+		<item>banana</item>
+		<item>bubblegum</item>
+		<item>butterscotch</item>
+		<item>clove</item>
+		<item>cooked vegetables</item>
+		<item>cough drop</item>
+		<item>ginger</item>
+		<item>licorice</item>
+		<item>raisin</item>
+		<item>rotten</item>
+		<item>eggs</item>
+		<item>soy sauce</item>
+		<item>skunky</item>
+		<item>smoke</item>
+		<item>vanilla</item>
+		<item>woody</item>
+
+
 	</string-array>
+	<string-array name="appearance_keywords">
+		<item>pale</item>
+		<item>golden</item>
+		<item>amber</item>
+		<item>orange</item>
+		<item>red</item>
+		<item>brown</item>
+		<item>black</item>
+
+		<item>clear</item>
+		<item>hazy</item>
+		<item>cloudy</item>
+		<item>sparkling</item>
+
+		<item>rocky head</item>
+		<item>frothy</item>
+		<item>minimal head</item>
+		<item>white foam</item>
+		<item>tan foam</item>
+		<item>brown foam</item>
+
+	</string-array>
+	<string-array name="taste_keywords">
+		<item>light sweetness</item>
+		<item>medium sweetness</item>
+		<item>heavy cloying sweetness</item>
+		<item>lightly bitter</item>
+		<item>medium bitterness</item>
+		<item>very bitter</item>
+		<item>lightly sour</item>
+		<item>medium sourness</item>
+		<item>heavily sour</item>
+		<item>salty</item>
+		<item>umami</item>
+	</string-array>
+	<string-array name="palate_keywords">
+		<item>light body</item>
+		<item>medium body</item>
+		<item>full body</item>
+		<item>thin feel</item>
+		<item>oily feel</item>
+		<item>creamy</item>
+		<item>sticky</item>
+		<item>slick feel</item>
+		<item>thick feel</item>
+		<item>fizzy</item>
+		<item>lively</item>
+		<item>average carbonation</item>
+		<item>soft carbonation</item>
+		<item>flat</item>
+		<item>astringent</item>
+		<item>bitter</item>
+		<item>long finish</item>
+	</string-array>
+
 </resources>

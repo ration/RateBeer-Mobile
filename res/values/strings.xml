@@ -25,7 +25,7 @@
 <string name="app_name">RateBeer Mobile</string>
 <string name="rate_aroma">Aroma</string>
 <string name="rate_appearance">Appearance</string>
-<string name="rate_flavor">Flavor</string>
+<string name="rate_flavor">Taste</string>
 <string name="rate_palate">Palate</string>
 <string name="rate_overall">Overall</string>
 <string name="rate_button">Add Rating</string>

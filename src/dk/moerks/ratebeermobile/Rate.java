@@ -44,7 +44,7 @@ import dk.moerks.ratebeermobile.task.SaveRatingTask;
 
 public class Rate extends BetterRBDefaultActivity {
 	private static final int MIN_COMMENT_LEN = 75;
-	private static final int KEYWORDS_AROMA = 1;
+	private static final int KEYWORDS = 1;
 	@SuppressWarnings("unused")
 	private static final String LOGTAG = "Rate";
     String beername =  null;
@@ -183,10 +183,33 @@ public class Rate extends BetterRBDefaultActivity {
 	}
 	
 	public void onAromaClick(View vier) {
-		String[] malt = getResources().getStringArray(R.array.aroma_malt);
+		String[] malt = getResources().getStringArray(R.array.aroma_keywords);
+		doKeywords(malt);
+	}
+	
+	public void onAppearanceClick(View vier) {
+		String[] keys = getResources().getStringArray(R.array.appearance_keywords);
+		doKeywords(keys);
+	}
+	
+	
+	public void onTasteClick(View vier) {
+		String[] keys = getResources().getStringArray(R.array.taste_keywords);
+		doKeywords(keys);
+	}
+	
+	
+	public void onPalateClick(View vier) {
+		String[] keys = getResources().getStringArray(R.array.palate_keywords);
+		doKeywords(keys);
+	}
+	
+	
+	
+	private void doKeywords(String [] list) {
 		Intent keywords = new Intent(Rate.this, Keywords.class);
-		keywords.putExtra("keywords", malt);
-		startActivityForResult(keywords, KEYWORDS_AROMA);
+		keywords.putExtra("keywords", list);
+		startActivityForResult(keywords, KEYWORDS);
 	}
 	
 	public void updateTotalText() {
@@ -197,7 +220,7 @@ public class Rate extends BetterRBDefaultActivity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent
 			  data) {
-		if (requestCode == KEYWORDS_AROMA) {
+		if (requestCode == KEYWORDS) {
 			if (data != null && data.getExtras() != null) {
 				String[] sels = data.getExtras().getStringArray("selected");
 		        EditText rateComment = (EditText) findViewById(R.id.rate_value_comments);
