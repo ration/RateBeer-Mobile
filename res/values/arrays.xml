@@ -1,102 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Copyright 2010, Jesper Fussing Mørk
- 
-  This file is part of Ratebeer Mobile for Android.
- 
-  Ratebeer Mobile is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
- 
-  Ratebeer Mobile is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
- 
-  You should have received a copy of the GNU General Public License
-  along with Ratebeer Mobile.  If not, see <http://www.gnu.org/licenses/>.
- -->
+<!-- Copyright 2010, Jesper Fussing Mørk This file is part of Ratebeer Mobile 
+	for Android. Ratebeer Mobile is free software: you can redistribute it and/or 
+	modify it under the terms of the GNU General Public License as published 
+	by the Free Software Foundation, either version 3 of the License, or (at 
+	your option) any later version. Ratebeer Mobile is distributed in the hope 
+	that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
+	warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+	GNU General Public License for more details. You should have received a copy 
+	of the GNU General Public License along with Ratebeer Mobile. If not, see 
+	<http://www.gnu.org/licenses/>. -->
 <resources>
-<string-array name="aroma">
-	<item>1</item>
-	<item>2</item>
-	<item>3</item>
-	<item>4</item>
-	<item>5</item>
-	<item>6</item>
-	<item>7</item>
-	<item>8</item>
-	<item>9</item>
-	<item>10</item>
-</string-array>
-<string-array name="appearance">
-	<item>1</item>
-	<item>2</item>
-	<item>3</item>
-	<item>4</item>
-	<item>5</item>
-</string-array>
-<string-array name="flavor">
-	<item>1</item>
-	<item>2</item>
-	<item>3</item>
-	<item>4</item>
-	<item>5</item>
-	<item>6</item>
-	<item>7</item>
-	<item>8</item>
-	<item>9</item>
-	<item>10</item>
-</string-array>
-<string-array name="palate">
-	<item>1</item>
-	<item>2</item>
-	<item>3</item>
-	<item>4</item>
-	<item>5</item>
-</string-array>
-<string-array name="overall">
-	<item>1</item>
-	<item>2</item>
-	<item>3</item>
-	<item>4</item>
-	<item>5</item>
-	<item>6</item>
-	<item>7</item>
-	<item>8</item>
-	<item>9</item>
-	<item>10</item>
-	<item>11</item>
-	<item>12</item>
-	<item>13</item>
-	<item>14</item>
-	<item>15</item>
-	<item>16</item>
-	<item>17</item>
-	<item>18</item>
-	<item>19</item>
-	<item>20</item>
-</string-array>
-<string-array name="notification_interval">
-	<item>15 min</item>
-	<item>30 min</item>
-	<item>1 hour</item>
-</string-array>
-<string-array name="notification_interval_values">
-	<item>900000</item>
-	<item>1800000</item>
-	<item>3600000</item>
-</string-array>
-<string-array name="aroma_malt">
-<item>caramel</item>
-<item>bread</item>
-<item>hay</item>
-<item>cereal</item>
-<item>chocolate</item>
-<item>coffee</item>
-<item>nuts</item>
-<item>toast</item>
-<item>roasty</item> 
-</string-array>
+	<string-array name="aroma">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+	</string-array>
+	<string-array name="appearance">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+	</string-array>
+	<string-array name="flavor">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+	</string-array>
+	<string-array name="palate">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+	</string-array>
+	<string-array name="overall">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+		<item>14</item>
+		<item>15</item>
+		<item>16</item>
+		<item>17</item>
+		<item>18</item>
+		<item>19</item>
+		<item>20</item>
+	</string-array>
+	<string-array name="notification_interval">
+		<item>15 min</item>
+		<item>30 min</item>
+		<item>1 hour</item>
+	</string-array>
+	<string-array name="notification_interval_values">
+		<item>900000</item>
+		<item>1800000</item>
+		<item>3600000</item>
+	</string-array>
+	<string-array name="aroma_malt">
+		<item>caramel</item>
+		<item>bread</item>
+		<item>hay</item>
+		<item>cereal</item>
+		<item>chocolate</item>
+		<item>coffee</item>
+		<item>nuts</item>
+		<item>toast</item>
+		<item>roasty</item>
+	</string-array>
 </resources>

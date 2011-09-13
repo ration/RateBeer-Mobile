@@ -66,6 +66,7 @@
 
 <uses-library android:name="com.google.android.maps"></uses-library>
 <activity android:name="BeerView"></activity>
+<activity android:name="Keywords"></activity>
 </application>
 
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>

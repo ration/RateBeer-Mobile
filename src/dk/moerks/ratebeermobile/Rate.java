@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,6 +33,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +44,7 @@ import dk.moerks.ratebeermobile.task.SaveRatingTask;
 
 public class Rate extends BetterRBDefaultActivity {
 	private static final int MIN_COMMENT_LEN = 75;
+	private static final int KEYWORDS_AROMA = 1;
 	@SuppressWarnings("unused")
 	private static final String LOGTAG = "Rate";
     String beername =  null;
@@ -180,13 +183,29 @@ public class Rate extends BetterRBDefaultActivity {
 	}
 	
 	public void onAromaClick(View vier) {
-		
+		String[] malt = getResources().getStringArray(R.array.aroma_malt);
+		Intent keywords = new Intent(Rate.this, Keywords.class);
+		keywords.putExtra("keywords", malt);
+		startActivityForResult(keywords, KEYWORDS_AROMA);
 	}
 	
 	public void updateTotalText() {
 		CharSequence totalScore = getText(R.string.rate_totalscore);
 		TextView totalText = (TextView) findViewById(R.id.rate_total);
 		totalText.setText(totalScore + " " + calculateTotalScore());
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent
+			  data) {
+		if (requestCode == KEYWORDS_AROMA) {
+			if (data != null && data.getExtras() != null) {
+				String[] sels = data.getExtras().getStringArray("selected");
+		        EditText rateComment = (EditText) findViewById(R.id.rate_value_comments);
+		        for (String sel: sels) {
+		        	rateComment.append(sel+",");
+		        }
+	}
+		}
 	}
 	
 	private String calculateTotalScore() {
