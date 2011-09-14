@@ -60,35 +60,35 @@ public class RBParser {
 			int aromaEnd = aromaBegin + 3;
 			String aromaTemp = content.substring(aromaBegin, aromaEnd);
 			Log.d(LOGTAG, "AROMA: " + aromaTemp);
-			rating.setAroma(cleanValue(aromaTemp));
+			rating.setAroma(Integer.parseInt(cleanValue(aromaTemp)));
 	
 			//Appearance
 			int appearanceBegin = content.indexOf("SELECTED", aromaEnd+1)-3;
 			int appearanceEnd = appearanceBegin + 3;
 			String appearanceTemp = content.substring(appearanceBegin, appearanceEnd);
 			Log.d(LOGTAG, "APPEARANCE: " + appearanceTemp);
-			rating.setAppearance(cleanValue(appearanceTemp));
+			rating.setAppearance(Integer.parseInt(cleanValue(appearanceTemp)));
 	
 			//Flavor
 			int flavorBegin = content.indexOf("SELECTED", appearanceEnd+1)-3;
 			int flavorEnd = flavorBegin + 3;
 			String flavorTemp = content.substring(flavorBegin, flavorEnd);
 			Log.d(LOGTAG, "FLAVOR: " + flavorTemp);
-			rating.setFlavor(cleanValue(flavorTemp));
+			rating.setFlavor(Integer.parseInt(cleanValue(flavorTemp)));
 	
 			//Palate
 			int palateBegin = content.indexOf("SELECTED", flavorEnd+1)-3;
 			int palateEnd = palateBegin + 3;
 			String palateTemp = content.substring(palateBegin, palateEnd);
 			Log.d(LOGTAG, "PALATE: " + palateTemp);
-			rating.setPalate(cleanValue(palateTemp));
+			rating.setPalate(Integer.parseInt(cleanValue(palateTemp)));
 			
 			//Overall
 			int overallBegin = content.indexOf("SELECTED", palateEnd+1)-3;
 			int overallEnd = overallBegin + 3;
 			String overallTemp = content.substring(overallBegin, overallEnd);
 			Log.d(LOGTAG, "OVERALL: " + overallTemp);
-			rating.setOverall(cleanValue(overallTemp));
+			rating.setOverall(Integer.parseInt(cleanValue(overallTemp)));
 			
 			//Comment
 			int commentBegin = content.indexOf("class=\"normBack\">") + 17;

@@ -18,11 +18,7 @@
  */
 package dk.moerks.ratebeermobile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,16 +27,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 import dk.moerks.ratebeermobile.activity.BetterRBDefaultActivity;
+import dk.moerks.ratebeermobile.db.BeerLocalStorageDatabase;
 import dk.moerks.ratebeermobile.task.PostTwitterStatusTask;
 import dk.moerks.ratebeermobile.task.SaveRatingTask;
+import dk.moerks.ratebeermobile.vo.RatingData;
 
 public class Rate extends BetterRBDefaultActivity {
 	private static final int MIN_COMMENT_LEN = 75;
@@ -136,17 +133,20 @@ public class Rate extends BetterRBDefaultActivity {
                 	final String overallString = (String)overallText.getSelectedItem();
                 	String totalScore = calculateTotalScore();
                 	
-	    			List<NameValuePair> parameters = new ArrayList<NameValuePair>();  
-	    			parameters.add(new BasicNameValuePair("BeerID", beerid));  
-	    			parameters.add(new BasicNameValuePair("aroma", aromaString));  
-	    			parameters.add(new BasicNameValuePair("appearance", appearanceString));  
-	    			parameters.add(new BasicNameValuePair("flavor", flavorString));  
-	    			parameters.add(new BasicNameValuePair("palate", palateString));  
-	    			parameters.add(new BasicNameValuePair("overall", overallString));
-	    			parameters.add(new BasicNameValuePair("totalscore", totalScore));
-	    			parameters.add(new BasicNameValuePair("Comments", commentString));
+                	RatingData data = new RatingData(beerid, 
+                			Integer.valueOf(aromaString), 
+                			Integer.valueOf(appearanceString), 
+                			Integer.valueOf(flavorString), 
+                			Integer.valueOf(palateString), 
+                			Integer.valueOf(overallString), 
+                			commentString);
+                	// Create a backup local copy of the data.
+                	BeerLocalStorageDatabase db = new BeerLocalStorageDatabase(getContext());
+                	db.open();
+	    			db.saveBeer(data);
+	    			db.close();
 	    			
-	    			new SaveRatingTask(Rate.this).execute(parameters.toArray(new NameValuePair[] {}));
+	    			new SaveRatingTask(Rate.this).execute(data.toNameValuePair().toArray(new NameValuePair[] {}));
 	    			
 	    			SharedPreferences prefs = getSharedPreferences(Settings.PREFERENCETAG, 0);
 	    			if (prefs.getBoolean("rb_twitter_ratings", false)) {

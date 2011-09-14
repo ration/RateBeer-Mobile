@@ -18,53 +18,83 @@
  */
 package dk.moerks.ratebeermobile.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 public class RatingData {
-	private String aroma;
-	private String appearance;
-	private String flavor;
-	private String palate;
-	private String overall;
+	private String id;
+	
+	private int aroma;
+	private int appearance;
+	private int flavor;
+	private int palate;
+	private int overall;
 	@SuppressWarnings("unused")
-	private String totalscore;
+	private int totalscore;
 	private String comment;
 	
-	public String getAroma() {
+	public RatingData(String id, int aroma, 
+			int appearance, int flavor, int palate, int overall, String comment) {
+		this.id = id;
+		this.aroma = aroma;
+		this.appearance = appearance;
+		this.flavor = flavor;
+		this.palate = palate;
+		this.overall = overall;
+		this.comment = comment;
+	}
+	public RatingData() {
+		
+	}
+	
+	public List<NameValuePair >toNameValuePair() {
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();  
+		parameters.add(new BasicNameValuePair("BeerID", id));  
+		parameters.add(new BasicNameValuePair("aroma", String.valueOf(aroma)));
+		parameters.add(new BasicNameValuePair("appearance", String.valueOf(appearance)));  
+		parameters.add(new BasicNameValuePair("flavor", String.valueOf(flavor)));  
+		parameters.add(new BasicNameValuePair("palate", String.valueOf(palate)));  
+		parameters.add(new BasicNameValuePair("overall", String.valueOf(overall)));
+		parameters.add(new BasicNameValuePair("totalscore", getTotalscore()));
+		parameters.add(new BasicNameValuePair("Comments", comment));
+		return parameters;
+	}
+	
+	
+	public int getAroma() {
 		return aroma;
 	}
-	public void setAroma(String aroma) {
+	public void setAroma(int aroma) {
 		this.aroma = aroma;
 	}
-	public String getAppearance() {
+	public int getAppearance() {
 		return appearance;
 	}
-	public void setAppearance(String appearance) {
+	public void setAppearance(int appearance) {
 		this.appearance = appearance;
 	}
-	public String getFlavor() {
+	public int getFlavor() {
 		return flavor;
 	}
-	public void setFlavor(String flavor) {
+	public void setFlavor(int flavor) {
 		this.flavor = flavor;
 	}
-	public String getPalate() {
+	public int getPalate() {
 		return palate;
 	}
-	public void setPalate(String palate) {
+	public void setPalate(int palate) {
 		this.palate = palate;
 	}
-	public String getOverall() {
+	public int getOverall() {
 		return overall;
 	}
-	public void setOverall(String overall) {
+	public void setOverall(int overall) {
 		this.overall = overall;
 	}
 	public String getTotalscore() {
-		int aroma = Integer.parseInt(this.aroma);
-		int appearance = Integer.parseInt(this.appearance);
-		int flavor = Integer.parseInt(this.flavor);
-		int palate = Integer.parseInt(this.palate);
-		int overall = Integer.parseInt(this.overall);
-		
 		int total = (aroma + appearance + flavor + palate + overall);
 
 		float totalscore =  ((float)total) / 10;
@@ -76,5 +106,17 @@ public class RatingData {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
 	}
 }
